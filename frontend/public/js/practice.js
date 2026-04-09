@@ -194,9 +194,7 @@ let currentWord = null;
             
             userInput = [];
             document.getElementById('chinese-word').textContent = currentWord.chinese;
-            document.getElementById('message').style.display = 'none';
-            hideWordResult();
-            hideNextButton();
+            hideResult();
             createLetterBoxes();
         }
         
@@ -297,7 +295,7 @@ let currentWord = null;
         // 提交答案
         function submitAnswer() {
             if (userInput.length !== currentWord.english.length) {
-                showMessage('请填写所有字母！', 'error');
+                // 不显示提示，直接忽略
                 return;
             }
             
@@ -307,21 +305,28 @@ let currentWord = null;
             stats.count++;
             isAnswerSubmitted = true;
             
+            const resultArea = document.getElementById('result-area');
+            const resultWord = document.getElementById('correct-word');
+            const resultTip = document.getElementById('result-tip');
+            
+            resultWord.textContent = correctAnswer + ' - ' + currentWord.chinese;
+            
             if (userAnswer === correctAnswer) {
                 stats.correct++;
-                showMessage('太棒了！完全正确！', 'success');
+                resultTip.textContent = '正确';
+                resultArea.className = 'result-area success';
                 highlightLetters(true);
                 learnedWords.add(correctAnswer);
                 wrongWords.delete(correctAnswer);
             } else {
-                showMessage('再试试吧！', 'error');
+                resultTip.textContent = '错误';
+                resultArea.className = 'result-area error';
                 highlightLetters(false);
                 wrongWords.add(correctAnswer);
                 learnedWords.delete(correctAnswer);
             }
             
-            showWordResult();
-            showNextButton();
+            resultArea.style.display = 'block';
             updateStats();
             saveStats();
         }
@@ -347,63 +352,15 @@ let currentWord = null;
             }
         }
         
-        // 显示消息
-        function showMessage(text, type) {
-            const msg = document.getElementById('message');
-            msg.innerHTML = '';
-            const textNode = document.createTextNode(text);
-            msg.appendChild(textNode);
-            msg.className = 'message ' + type;
-            msg.style.display = 'block';
-        }
-        
-        // 显示完整单词和解释
-        function showWordResult() {
-            const wordResult = document.getElementById('word-result');
-            const correctWord = document.getElementById('correct-word');
-            const wordExplanation = document.getElementById('word-explanation');
-            
-            correctWord.textContent = currentWord.english.toLowerCase();
-            wordExplanation.textContent = currentWord.chinese;
-            wordResult.style.display = 'block';
-        }
-        
-        // 隐藏完整单词和解释
-        function hideWordResult() {
-            document.getElementById('word-result').style.display = 'none';
-        }
-        
-        // 显示"下一个单词"按钮
-        function showNextButton() {
-            const existingBtn = document.getElementById('next-word-btn');
-            if (existingBtn) existingBtn.remove();
-            
-            const btn = document.createElement('button');
-            btn.id = 'next-word-btn';
-            btn.className = 'next-word-btn';
-            btn.textContent = '下一个单词';
-            btn.onclick = goToNextWord;
-            
-            document.getElementById('message').appendChild(btn);
-        }
-        
-        // 隐藏"下一个单词"按钮
-        function hideNextButton() {
-            const btn = document.getElementById('next-word-btn');
-            if (btn) btn.remove();
+        // 隐藏结果区域
+        function hideResult() {
+            document.getElementById('result-area').style.display = 'none';
         }
         
         // 跳转到下一个单词
         function goToNextWord() {
-            hideWordResult();
-            hideNextButton();
-            hideMessage();
+            hideResult();
             newWord();
-        }
-        
-        // 隐藏消息
-        function hideMessage() {
-            document.getElementById('message').style.display = 'none';
         }
         
         // 显示学习记录弹窗
