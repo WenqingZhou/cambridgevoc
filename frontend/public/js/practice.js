@@ -245,6 +245,36 @@ let currentWord = null;
             newWord();
         }
         
+        // 清除所有学习记录
+        function clearAllRecords() {
+            const confirmed = confirm('确定要清除所有学习记录吗？\n\n这将重置：\n- 已练习次数\n- 正确率\n- 已掌握单词\n- 错词本\n\n此操作不可恢复！');
+            
+            if (confirmed) {
+                // 清空数据
+                stats = { count: 0, correct: 0 };
+                learnedWords = new Set();
+                wrongWords = new Set();
+                
+                // 保存到 localStorage
+                saveStats();
+                
+                // 更新显示
+                updateStats();
+                
+                // 重新初始化单词池
+                initLevelPools();
+                initWrongWordPool();
+                
+                // 获取新单词
+                newWord();
+                
+                // 关闭设置弹窗
+                hideSettings();
+                
+                alert('学习记录已清除！');
+            }
+        }
+        
         // 创建字母框
         function createLetterBoxes() {
             const area = document.getElementById('spelling-area');

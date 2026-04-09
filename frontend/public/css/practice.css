@@ -208,6 +208,26 @@
             color: #666;
         }
         
+        /* 清除记录按钮 */
+        .clear-btn {
+            padding: 8px 16px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .clear-btn:hover {
+            background: #d32f2f;
+        }
+        
+        .clear-btn:active {
+            transform: scale(0.98);
+        }
+        
         /* 学习记录弹窗 */
         .record-modal {
             display: none;
