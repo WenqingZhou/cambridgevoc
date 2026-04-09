@@ -454,12 +454,15 @@
             color: #666;
         }
         
-        /* 结果区域：正确答案 + 提示 + 按钮 */
+        /* 结果区域：正确答案 + 按钮 */
         .result-area {
             text-align: center;
             margin-bottom: 20px;
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .result-area.success {
@@ -471,9 +474,8 @@
         }
         
         .result-word {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: normal;
-            margin-bottom: 8px;
         }
         
         .result-area.success .result-word {
@@ -484,38 +486,18 @@
             color: #c62828;
         }
         
-        .result-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .result-tip {
-            font-size: 1em;
-            color: #666;
-        }
-        
-        .result-area.success .result-tip {
-            color: #2e7d32;
-        }
-        
-        .result-area.error .result-tip {
-            color: #c62828;
-        }
-        
-        /* 下一个单词按钮 */
+        /* 下一个按钮 */
         .next-word-btn {
-            padding: 6px 16px;
+            padding: 8px 20px;
             background: white;
-            border: 2px solid #2196f3;
-            border-radius: 6px;
+            border: 2px solid;
+            border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: inherit;
             white-space: nowrap;
-            color: #2196f3;
+            font-weight: 500;
         }
         
         .result-area.success .next-word-btn {
@@ -529,20 +511,15 @@
         }
         
         .next-word-btn:hover {
-            background: #2196f3;
             color: white;
         }
         
         .result-area.success .next-word-btn:hover {
             background: #4caf50;
-            border-color: #4caf50;
-            color: white;
         }
         
         .result-area.error .next-word-btn:hover {
             background: #f44336;
-            border-color: #f44336;
-            color: white;
         }
         
         .keyboard {

@@ -307,26 +307,23 @@ let currentWord = null;
             
             const resultArea = document.getElementById('result-area');
             const resultWord = document.getElementById('correct-word');
-            const resultTip = document.getElementById('result-tip');
             
             resultWord.textContent = correctAnswer + ' - ' + currentWord.chinese;
             
             if (userAnswer === correctAnswer) {
                 stats.correct++;
-                resultTip.textContent = '正确';
                 resultArea.className = 'result-area success';
                 highlightLetters(true);
                 learnedWords.add(correctAnswer);
                 wrongWords.delete(correctAnswer);
             } else {
-                resultTip.textContent = '错误';
                 resultArea.className = 'result-area error';
                 highlightLetters(false);
                 wrongWords.add(correctAnswer);
                 learnedWords.delete(correctAnswer);
             }
             
-            resultArea.style.display = 'block';
+            resultArea.style.display = 'flex';
             updateStats();
             saveStats();
         }
