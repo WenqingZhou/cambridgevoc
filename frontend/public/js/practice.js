@@ -468,8 +468,14 @@ let currentWord = null;
             if (e.target === this) hideSettings();
         });
         
-        // 物理键盘支持
-        document.addEventListener('keydown', function(e) {
+        // 物理键盘支持 - 使用捕获阶段确保优先处理
+        window.addEventListener('keydown', function(e) {
+            // 如果焦点在输入框等元素上，不处理（但页面本身可以）
+            const activeElement = document.activeElement;
+            if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+            
             // 弹窗打开时，ESC 关闭弹窗
             if (document.getElementById('settings-modal').classList.contains('show') ||
                 document.getElementById('record-modal').classList.contains('show')) {
@@ -486,6 +492,7 @@ let currentWord = null;
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     goToNextWord();
+                    return;
                 }
                 // Backspace 允许重新输入
                 if (e.key === 'Backspace') {
@@ -501,30 +508,33 @@ let currentWord = null;
                         box.className = 'letter-box';
                         document.getElementById('correct-letter-' + i).style.display = 'none';
                     }
-                    // 确保焦点在页面上
-                    document.body.focus();
+                    return;
                 }
+                // 其他按键不处理
                 return;
             }
             
             // a-z 输入字母
-            if (e.key.length === 1 && e.key.match(/[a-zA-Z]/)) {
+            if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
                 e.preventDefault();
                 addLetter(e.key);
+                return;
             }
             
             // Backspace 删除
             if (e.key === 'Backspace') {
                 e.preventDefault();
                 deleteLetter();
+                return;
             }
             
             // Enter 提交
             if (e.key === 'Enter') {
                 e.preventDefault();
                 submitAnswer();
+                return;
             }
-        });
+        }, true); // 捕获阶段
         
         // 启动应用
         init();
