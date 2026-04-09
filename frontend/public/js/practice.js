@@ -477,11 +477,27 @@ let currentWord = null;
                 return;
             }
             
-            // 已提交答案后，按 Enter 或 Space 进入下一个单词
+            // 已提交答案后
             if (isAnswerSubmitted) {
+                // Enter 或 Space 进入下一个单词
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     goToNextWord();
+                }
+                // Backspace 允许重新输入
+                if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    // 清空输入，隐藏结果区域
+                    userInput = [];
+                    isAnswerSubmitted = false;
+                    hideResult();
+                    // 重置所有字母框
+                    for (let i = 0; i < currentWord.english.length; i++) {
+                        const box = document.getElementById('letter-' + i);
+                        box.textContent = '';
+                        box.className = 'letter-box';
+                        document.getElementById('correct-letter-' + i).style.display = 'none';
+                    }
                 }
                 return;
             }

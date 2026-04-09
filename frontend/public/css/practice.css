@@ -458,11 +458,9 @@
         .result-area {
             text-align: center;
             margin-bottom: 20px;
-            padding: 12px 20px;
+            padding: 15px 20px;
             border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: relative;
         }
         
         .result-area.success {
@@ -488,6 +486,10 @@
         
         /* 下一个按钮 */
         .next-word-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             padding: 8px 20px;
             background: white;
             border: 2px solid;
@@ -520,6 +522,10 @@
         
         .result-area.error .next-word-btn:hover {
             background: #f44336;
+        }
+        
+        .next-word-btn:active {
+            opacity: 0.8;
         }
         
         .keyboard {
