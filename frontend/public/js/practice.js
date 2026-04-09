@@ -6,6 +6,7 @@ let currentWord = null;
         let currentTab = 'learned'; // 当前选中的tab
         let selectedLevels = ['starters', 'movers', 'flyers']; // 选中的级别
         let practiceMode = 'normal'; // 练习模式：normal 或 wrong
+        let isAnswerSubmitted = false; // 是否已提交答案
         
         // 按级别顺序出题的相关变量
         let currentLevelIndex = 0;
@@ -36,7 +37,6 @@ let currentWord = null;
         
         // 初始化错词单词池
         function initWrongWordPool() {
-            // 从 wordBank 中筛选出错词
             wrongWordPool = wordBank.filter(word => 
                 wrongWords.has(word.english.toLowerCase())
             );
@@ -140,15 +140,15 @@ let currentWord = null;
         
         // 新单词
         function newWord() {
+            isAnswerSubmitted = false; // 重置提交状态
+            
             if (practiceMode === 'wrong') {
-                // 错词复习模式
                 if (wrongWordPool.length === 0) {
                     initWrongWordPool();
                 }
                 
                 if (wrongWordPool.length === 0) {
                     alert('错词本空了！所有错词都已掌握！');
-                    // 切换回正常模式
                     practiceMode = 'normal';
                     document.getElementById('mode-normal').checked = true;
                     updateModeIndicator();
@@ -159,7 +159,6 @@ let currentWord = null;
                 
                 currentWord = wrongWordPool.pop();
             } else {
-                // 正常练习模式
                 if (!levelWordPools.starters || levelWordPools.starters.length === 0) {
                     initLevelPools();
                 }
@@ -306,22 +305,18 @@ let currentWord = null;
             const correctAnswer = currentWord.english.toLowerCase();
             
             stats.count++;
+            isAnswerSubmitted = true;
             
             if (userAnswer === correctAnswer) {
                 stats.correct++;
                 showMessage('太棒了！完全正确！', 'success');
                 highlightLetters(true);
-                
-                // 答对了：加入已掌握，从错词本移除
                 learnedWords.add(correctAnswer);
                 wrongWords.delete(correctAnswer);
             } else {
                 showMessage('再试试吧！', 'error');
                 highlightLetters(false);
-                
-                // 答错了：加入错词本
                 wrongWords.add(correctAnswer);
-                // 从已掌握移除（如果之前答对过）
                 learnedWords.delete(correctAnswer);
             }
             
@@ -386,7 +381,7 @@ let currentWord = null;
             const btn = document.createElement('button');
             btn.id = 'next-word-btn';
             btn.className = 'next-word-btn';
-            btn.textContent = '下一个单词 →';
+            btn.textContent = '下一个单词';
             btn.onclick = goToNextWord;
             
             document.getElementById('message').appendChild(btn);
@@ -457,7 +452,6 @@ let currentWord = null;
                     return;
                 }
             } else {
-                // 未学习 = 既没掌握也没在错词本
                 words = filteredBank.filter(word => 
                     !learnedWords.has(word.english.toLowerCase()) && 
                     !wrongWords.has(word.english.toLowerCase())
@@ -515,6 +509,46 @@ let currentWord = null;
         
         document.getElementById('settings-modal').addEventListener('click', function(e) {
             if (e.target === this) hideSettings();
+        });
+        
+        // 物理键盘支持
+        document.addEventListener('keydown', function(e) {
+            // 弹窗打开时，ESC 关闭弹窗
+            if (document.getElementById('settings-modal').classList.contains('show') ||
+                document.getElementById('record-modal').classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    hideSettings();
+                    hideRecord();
+                }
+                return;
+            }
+            
+            // 已提交答案后，按 Enter 或 Space 进入下一个单词
+            if (isAnswerSubmitted) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    goToNextWord();
+                }
+                return;
+            }
+            
+            // a-z 输入字母
+            if (e.key.length === 1 && e.key.match(/[a-zA-Z]/)) {
+                e.preventDefault();
+                addLetter(e.key);
+            }
+            
+            // Backspace 删除
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                deleteLetter();
+            }
+            
+            // Enter 提交
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                submitAnswer();
+            }
         });
         
         // 启动应用
