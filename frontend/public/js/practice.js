@@ -467,6 +467,11 @@ let currentWord = null;
         
         // 物理键盘支持
         document.addEventListener('keydown', function(e) {
+            // 忽略快捷键（Ctrl/Alt/Meta/Tab）
+            if (e.ctrlKey || e.altKey || e.metaKey || e.key === 'Tab') {
+                return;
+            }
+            
             // 弹窗打开时，ESC 关闭弹窗，其他不处理
             const settingsOpen = document.getElementById('settings-modal').classList.contains('show');
             const recordOpen = document.getElementById('record-modal').classList.contains('show');
