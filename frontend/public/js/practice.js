@@ -324,13 +324,15 @@ let currentWord = null;
         
         // 提交答案
         function submitAnswer() {
-            if (userInput.length !== currentWord.english.length) {
-                // 不显示提示，直接忽略
-                return;
+            // 允许未填完就提交，未填的字母当作错误
+            const correctAnswer = currentWord.english.toLowerCase();
+            
+            // 补齐未输入的字母为空字符串
+            while (userInput.length < correctAnswer.length) {
+                userInput.push('');
             }
             
             const userAnswer = userInput.join('').toLowerCase();
-            const correctAnswer = currentWord.english.toLowerCase();
             
             stats.count++;
             isAnswerSubmitted = true;
