@@ -454,6 +454,13 @@ let currentWord = null;
                 'flyers': 'A2 Flyers'
             };
             
+            // 计算每个级别的总词数
+            const levelTotals = {
+                'starters': filteredBank.filter(w => w.level === 'starters').length,
+                'movers': filteredBank.filter(w => w.level === 'movers').length,
+                'flyers': filteredBank.filter(w => w.level === 'flyers').length
+            };
+            
             const levelOrder = ['starters', 'movers', 'flyers'];
             
             levelOrder.forEach(level => {
@@ -467,7 +474,7 @@ let currentWord = null;
                 
                 const header = document.createElement('div');
                 header.className = `level-header ${level}`;
-                header.innerHTML = `${levelNames[level]}<span class="level-count">(${levelWords.length}个)</span>`;
+                header.innerHTML = `${levelNames[level]}<span class="level-count">(${levelWords.length}/${levelTotals[level]}个)</span>`;
                 section.appendChild(header);
                 
                 const grid = document.createElement('div');
