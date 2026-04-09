@@ -61,8 +61,6 @@ let currentWord = null;
             initWrongWordPool();
             updateModeIndicator();
             newWord();
-            // 确保页面获得焦点
-            document.body.focus();
         }
         
         // 创建键盘
@@ -360,7 +358,6 @@ let currentWord = null;
         function goToNextWord() {
             hideResult();
             newWord();
-            document.body.focus();
         }
         
         // 显示学习记录弹窗
@@ -468,17 +465,13 @@ let currentWord = null;
             if (e.target === this) hideSettings();
         });
         
-        // 物理键盘支持 - 使用捕获阶段确保优先处理
-        window.addEventListener('keydown', function(e) {
-            // 如果焦点在输入框等元素上，不处理（但页面本身可以）
-            const activeElement = document.activeElement;
-            if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
-                return;
-            }
+        // 物理键盘支持
+        document.addEventListener('keydown', function(e) {
+            // 弹窗打开时，ESC 关闭弹窗，其他不处理
+            const settingsOpen = document.getElementById('settings-modal').classList.contains('show');
+            const recordOpen = document.getElementById('record-modal').classList.contains('show');
             
-            // 弹窗打开时，ESC 关闭弹窗
-            if (document.getElementById('settings-modal').classList.contains('show') ||
-                document.getElementById('record-modal').classList.contains('show')) {
+            if (settingsOpen || recordOpen) {
                 if (e.key === 'Escape') {
                     hideSettings();
                     hideRecord();
@@ -488,53 +481,59 @@ let currentWord = null;
             
             // 已提交答案后
             if (isAnswerSubmitted) {
-                // Enter 或 Space 进入下一个单词
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     goToNextWord();
                     return;
                 }
-                // Backspace 允许重新输入
                 if (e.key === 'Backspace') {
                     e.preventDefault();
-                    // 清空输入，隐藏结果区域
-                    userInput = [];
-                    isAnswerSubmitted = false;
-                    hideResult();
-                    // 重置所有字母框
-                    for (let i = 0; i < currentWord.english.length; i++) {
-                        const box = document.getElementById('letter-' + i);
-                        box.textContent = '';
-                        box.className = 'letter-box';
-                        document.getElementById('correct-letter-' + i).style.display = 'none';
-                    }
+                    // 重置状态，允许重新输入
+                    resetForRetry();
                     return;
                 }
-                // 其他按键不处理
                 return;
             }
             
-            // a-z 输入字母
+            // 正常输入状态
             if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
                 e.preventDefault();
                 addLetter(e.key);
                 return;
             }
             
-            // Backspace 删除
             if (e.key === 'Backspace') {
                 e.preventDefault();
                 deleteLetter();
                 return;
             }
             
-            // Enter 提交
             if (e.key === 'Enter') {
                 e.preventDefault();
                 submitAnswer();
                 return;
             }
-        }, true); // 捕获阶段
+        });
+        
+        // 重置为重新输入状态
+        function resetForRetry() {
+            userInput = [];
+            isAnswerSubmitted = false;
+            hideResult();
+            
+            const length = currentWord.english.length;
+            for (let i = 0; i < length; i++) {
+                const box = document.getElementById('letter-' + i);
+                if (box) {
+                    box.textContent = '';
+                    box.className = 'letter-box';
+                }
+                const hint = document.getElementById('correct-letter-' + i);
+                if (hint) {
+                    hint.style.display = 'none';
+                }
+            }
+        }
         
         // 启动应用
         init();
