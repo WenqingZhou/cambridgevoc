@@ -467,9 +467,24 @@ let currentWord = null;
         
         // 物理键盘支持
         document.addEventListener('keydown', function(e) {
-            // 忽略快捷键（Ctrl/Alt/Meta/Tab）
-            if (e.ctrlKey || e.altKey || e.metaKey || e.key === 'Tab') {
+            // 忽略快捷键（任何修饰键按下时不处理）
+            if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey || e.key === 'Tab') {
                 return;
+            }
+            
+            // 只处理字母键，忽略功能键
+            if (e.key.length !== 1) {
+                // 功能键特殊处理
+                if (e.key === 'Escape') {
+                    hideSettings();
+                    hideRecord();
+                    return;
+                }
+                if (e.key === 'Enter' || e.key === 'Backspace' || e.key === ' ') {
+                    // 这些键继续处理
+                } else {
+                    return; // 其他功能键忽略
+                }
             }
             
             // 弹窗打开时，ESC 关闭弹窗，其他不处理
