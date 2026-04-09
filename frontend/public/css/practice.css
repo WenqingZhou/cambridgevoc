@@ -664,6 +664,63 @@
                 padding: 5px 12px;
                 font-size: 12px;
             }
+            
+            /* 设置弹窗适配 */
+            .settings-content,
+            .record-content {
+                width: 95%;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            
+            .settings-header,
+            .record-header {
+                padding: 15px;
+            }
+            
+            .settings-header h2,
+            .record-header h2 {
+                font-size: 1.1em;
+            }
+            
+            .settings-body {
+                padding: 15px;
+            }
+            
+            .settings-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+            
+            .settings-label {
+                min-width: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+                font-size: 15px;
+            }
+            
+            .level-checkboxes {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .checkbox-item {
+                padding: 6px 10px;
+            }
+            
+            .checkbox-item span:last-child {
+                font-size: 13px;
+            }
+            
+            .clear-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .close-btn {
+                font-size: 24px;
+            }
         }
         
         @media (max-width: 400px) {
