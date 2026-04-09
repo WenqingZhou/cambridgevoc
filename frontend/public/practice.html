@@ -43,10 +43,25 @@
     <div class="settings-modal" id="settings-modal">
         <div class="settings-content">
             <div class="settings-header">
-                <h2>⚙️ 设置</h2>
+                <h2>设置</h2>
                 <button class="close-btn" onclick="hideSettings()">&times;</button>
             </div>
             <div class="settings-body">
+                <div class="settings-item">
+                    <div class="settings-label">练习模式：</div>
+                    <div class="level-checkboxes">
+                        <label class="checkbox-item">
+                            <input type="radio" name="practice-mode" id="mode-normal" checked onchange="updatePracticeMode()">
+                            <span class="checkmark"></span>
+                            <span>正常练习</span>
+                        </label>
+                        <label class="checkbox-item wrong-mode">
+                            <input type="radio" name="practice-mode" id="mode-wrong" onchange="updatePracticeMode()">
+                            <span class="checkmark"></span>
+                            <span>错词复习</span>
+                        </label>
+                    </div>
+                </div>
                 <div class="settings-item">
                     <div class="settings-label">单词范围：</div>
                     <div class="level-checkboxes">
@@ -79,7 +94,8 @@
                 <button class="close-btn" onclick="hideRecord()">&times;</button>
             </div>
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('learned')">已学习</button>
+                <button class="tab-btn active" onclick="switchTab('learned')">已掌握</button>
+                <button class="tab-btn" onclick="switchTab('wrong')">错词本</button>
                 <button class="tab-btn" onclick="switchTab('unlearned')">未学习</button>
             </div>
             <div class="word-list" id="word-list">

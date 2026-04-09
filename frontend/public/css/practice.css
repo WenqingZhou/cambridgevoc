@@ -144,6 +144,10 @@
             display: none;
         }
         
+        .checkbox-item input[type="radio"] {
+            display: none;
+        }
+        
         .checkbox-item .checkmark {
             width: 20px;
             height: 20px;
@@ -162,9 +166,20 @@
             color: white;
         }
         
+        .checkbox-item input[type="radio"]:checked + .checkmark {
+            background: #2196f3;
+            border-color: #2196f3;
+            color: white;
+        }
+        
         .checkbox-item input[type="checkbox"]:checked + .checkmark::after {
             content: "✓";
             font-size: 14px;
+        }
+        
+        .checkbox-item input[type="radio"]:checked + .checkmark::after {
+            content: "•";
+            font-size: 16px;
         }
         
         .checkbox-item.starters .checkmark {
@@ -176,6 +191,15 @@
         }
         
         .checkbox-item.flyers .checkmark {
+            border-color: #f44336;
+        }
+        
+        .checkbox-item.wrong-mode .checkmark {
+            border-color: #f44336;
+        }
+        
+        .checkbox-item.wrong-mode input[type="radio"]:checked + .checkmark {
+            background: #f44336;
             border-color: #f44336;
         }
         
