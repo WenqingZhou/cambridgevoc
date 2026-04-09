@@ -411,17 +411,17 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 30px;
         }
         
         .letter-box {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 8px;
             background: white;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: normal;
             display: flex;
             align-items: center;
@@ -443,12 +443,12 @@
         
         /* 正确字母显示在输入框外面，大小和输入字母一样 */
         .correct-letter-below {
-            width: 50px;
+            width: 45px;
             text-align: center;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: normal;
             color: #2e7d32;
-            margin-top: 5px;
+            margin-top: 3px;
             display: none;
         }
         
@@ -602,18 +602,59 @@
         }
         
         @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .spelling-area {
+                gap: 3px;
+            }
+            
+            .letter-box {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+                border-radius: 6px;
+            }
+            
+            .correct-letter-below {
+                width: 35px;
+                font-size: 18px;
+            }
+            
             .keyboard {
                 grid-template-columns: repeat(7, 1fr);
             }
             
-            .letter-box {
-                width: 40px;
+            .key {
                 height: 40px;
-                font-size: 20px;
+                font-size: 14px;
             }
             
-            .key {
-                height: 45px;
+            .action-buttons .key {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .result-word {
+                font-size: 1.2em;
+            }
+            
+            .next-word-btn {
+                padding: 5px 12px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .letter-box {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+            
+            .correct-letter-below {
+                width: 30px;
                 font-size: 16px;
             }
         }
