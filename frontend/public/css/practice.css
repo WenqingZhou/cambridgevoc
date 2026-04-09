@@ -509,9 +509,13 @@
         .message {
             text-align: center;
             margin-top: 20px;
-            padding: 15px;
+            padding: 12px 20px;
             border-radius: 10px;
             font-size: 1.1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
         }
         
         .message.success {
@@ -524,24 +528,44 @@
             color: #c62828;
         }
         
-        /* 下一个单词按钮 - 简约清新风格 */
+        /* 下一个单词按钮 - 内联风格 */
         .next-word-btn {
-            display: block;
-            width: 200px;
-            margin: 15px auto 0;
-            padding: 10px 20px;
+            padding: 6px 16px;
             background: white;
             color: #2196f3;
             border: 2px solid #2196f3;
-            border-radius: 8px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: inherit;
+            white-space: nowrap;
+        }
+        
+        .message.success .next-word-btn {
+            border-color: #4caf50;
+            color: #4caf50;
+        }
+        
+        .message.error .next-word-btn {
+            border-color: #f44336;
+            color: #f44336;
         }
         
         .next-word-btn:hover {
             background: #2196f3;
+            color: white;
+        }
+        
+        .message.success .next-word-btn:hover {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: white;
+        }
+        
+        .message.error .next-word-btn:hover {
+            background: #f44336;
+            border-color: #f44336;
             color: white;
         }
         
