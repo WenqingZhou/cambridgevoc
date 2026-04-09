@@ -61,6 +61,8 @@ let currentWord = null;
             initWrongWordPool();
             updateModeIndicator();
             newWord();
+            // 确保页面获得焦点
+            document.body.focus();
         }
         
         // 创建键盘
@@ -323,7 +325,7 @@ let currentWord = null;
                 learnedWords.delete(correctAnswer);
             }
             
-            resultArea.style.display = 'flex';
+            resultArea.style.display = 'block';
             updateStats();
             saveStats();
         }
@@ -358,6 +360,7 @@ let currentWord = null;
         function goToNextWord() {
             hideResult();
             newWord();
+            document.body.focus();
         }
         
         // 显示学习记录弹窗
@@ -498,6 +501,8 @@ let currentWord = null;
                         box.className = 'letter-box';
                         document.getElementById('correct-letter-' + i).style.display = 'none';
                     }
+                    // 确保焦点在页面上
+                    document.body.focus();
                 }
                 return;
             }
