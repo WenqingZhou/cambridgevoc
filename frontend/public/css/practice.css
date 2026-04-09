@@ -456,10 +456,11 @@
         
         /* 结果区域：正确答案 + 按钮 */
         .result-area {
-            text-align: center;
+            display: block;
             margin-bottom: 20px;
-            padding: 15px 20px;
+            padding: 15px 100px 15px 20px;
             border-radius: 12px;
+            text-align: center;
             position: relative;
         }
         
@@ -487,10 +488,10 @@
         /* 下一个按钮 */
         .next-word-btn {
             position: absolute;
-            right: 20px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            padding: 8px 20px;
+            padding: 8px 18px;
             background: white;
             border: 2px solid;
             border-radius: 20px;
