@@ -210,12 +210,12 @@
         
         /* 清除记录按钮 */
         .clear-btn {
-            padding: 8px 16px;
+            padding: 5px 12px;
             background: #f44336;
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
